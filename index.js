@@ -16,7 +16,7 @@ app.get("/",(req,res)=>{
     res.send("Hello World")
 })
 
-app.post("/add-workout", async (req, res) => {
+app.post("/add-exercise", async (req, res) => {
     const {name,description,imageUrl,difficulty}=req.body
     const workout =Exercise({name,description,imageUrl,difficulty});
     await workout.save();
