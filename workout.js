@@ -9,6 +9,7 @@ const SetSchema = new mongoose.Schema({
 
 const ExerciseSchema = new mongoose.Schema({
   name: { type: String, required: true },
+  targetedMuscleGroups: [String],
   databaseId: { type: mongoose.Schema.Types.ObjectId, ref: "Exercise", required: true },
   sets: [SetSchema],
 }, { _id: false }); // no need for auto _id here either unless you want it

@@ -13,12 +13,14 @@ const ExerciseSchema = new mongoose.Schema({
 
     },
     
-    imageUrls:{
-        type:Array
+    imageUrl:{
+        type:String
     },
     difficulty:{
         type:String
-    }
+    },
+    targetedMuscleGroups: [String],
+
 
     
 

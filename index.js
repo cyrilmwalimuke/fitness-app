@@ -11,9 +11,14 @@ mongoose.connect('mongodb+srv://cyrilmwalimuke:zfrMsQiuENR8wsH7@fitness-carrier.
 app.use(express.json())
 app.use(cors())
 
+
+app.get("/",(req,res)=>{
+    res.send("Hello World")
+})
+
 app.post("/add-workout", async (req, res) => {
-    const {name,description,imageUrls,difficulty}=req.body
-    const workout =Exercise({name,description,imageUrls,difficulty});
+    const {name,description,imageUrl,difficulty}=req.body
+    const workout =Exercise({name,description,imageUrl,difficulty});
     await workout.save();
     res.json("new workout added successfully")
   })
@@ -50,6 +55,7 @@ app.post("/add-workout", async (req, res) => {
 
 
   app.post("/post-workout-exercises", async (req, res) => {
+    console.log("hello world")
     try {
       const { duration, workoutExercises } = req.body;
   
@@ -135,6 +141,50 @@ app.post("/add-workout", async (req, res) => {
     } catch (err) {
       console.error("Delete workout error:", err);
       res.status(500).json({ success: false, message: "Server error" });
+    }
+  });
+
+
+  app.post("/post-custom-workout-exercises", async (req, res) => {
+    console.log("hello world")
+    try {
+      const { duration, workoutExercises } = req.body;
+  
+      if (!duration || !workoutExercises) {
+        return res.status(400).json({ success: false, message: "Missing required fields" });
+      }
+  
+      // Convert reps/weight to Number (since they’re coming as strings in your example)
+      const sanitizedExercises = workoutExercises.map(ex => ({
+        name: ex.name,
+        databaseId: ex.databaseId,
+        sets: ex.sets.map(set => ({
+          reps: Number(set.reps),
+          weight: Number(set.weight),
+          weightUnit: set.weightUnit,
+          isCompleted: set.isCompleted
+        }))
+      }));
+  
+      const workout = new Workout({
+        duration,
+        workoutExercises: sanitizedExercises
+      });
+  
+      await workout.save();
+  
+      res.status(201).json({
+        success: true,
+        message: "Workout saved successfully",
+        data: workout
+      });
+    } catch (error) {
+      console.error("Error saving workout:", error);
+      res.status(500).json({
+        success: false,
+        message: "Server error while saving workout",
+        error: error.message
+      });
     }
   });
 
