@@ -118,7 +118,7 @@ app.post("/add-exercise", async (req, res) => {
         }))
       }));
   
-      const workout = new Workout({
+      const workout = new CustomWorkout({
         duration,
         workoutExercises: sanitizedExercises
       });
