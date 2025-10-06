@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const SetSchema = new mongoose.Schema({
   reps: { type: Number, required: true },
   weight: { type: Number, required: true },
-  weightUnit: { type: String, enum: ["kg", "lb"], required: true },
+  weightUnit: { type: String, enum: ["kg", "lbs"], required: true },
   isCompleted: { type: Boolean, default: false },
 }, { _id: false }); // don't need extra _id for sets
 

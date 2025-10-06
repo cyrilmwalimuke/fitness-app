@@ -4,6 +4,7 @@ import mongoose from "mongoose"
 import Exercise from "./exercise.js";
 
 import Workout from "./workout.js";
+import CustomWorkout from "./customworkout.js";
 
 
 const app = express()
