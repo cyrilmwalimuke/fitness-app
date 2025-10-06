@@ -17,8 +17,8 @@ app.get("/",(req,res)=>{
 })
 
 app.post("/add-exercise", async (req, res) => {
-    const {name,description,imageUrl,difficulty}=req.body
-    const workout =Exercise({name,description,imageUrl,difficulty});
+    const {name,description,imageUrl,difficulty,targetedMuscleGroups}=req.body
+    const workout =Exercise({name,description,imageUrl,difficulty,targetedMuscleGroups});
     await workout.save();
     res.json("new workout added successfully")
   })
