@@ -97,6 +97,49 @@ app.post("/add-exercise", async (req, res) => {
     }
   });
 
+  app.post("/post-custom-workout", async (req, res) => {
+    console.log("hello world")
+    try {
+      const { duration, workoutExercises } = req.body;
+  
+      if (!duration || !workoutExercises) {
+        return res.status(400).json({ success: false, message: "Missing required fields" });
+      }
+  
+      // Convert reps/weight to Number (since they’re coming as strings in your example)
+      const sanitizedExercises = workoutExercises.map(ex => ({
+        name: ex.name,
+        databaseId: ex.databaseId,
+        sets: ex.sets.map(set => ({
+          reps: Number(set.reps),
+          weight: Number(set.weight),
+          weightUnit: set.weightUnit,
+          isCompleted: set.isCompleted
+        }))
+      }));
+  
+      const workout = new Workout({
+        duration,
+        workoutExercises: sanitizedExercises
+      });
+  
+      await workout.save();
+  
+      res.status(201).json({
+        success: true,
+        message: "Workout saved successfully",
+        data: workout
+      });
+    } catch (error) {
+      console.error("Error saving workout:", error);
+      res.status(500).json({
+        success: false,
+        message: "Server error while saving workout",
+        error: error.message
+      });
+    }
+  });
+
 
 
   app.get("/workouts", async (req, res) => {
