@@ -15,7 +15,7 @@ app.use(cors())
 
 
 app.get("/",(req,res)=>{
-    res.send("Hello World")
+    res.send("Hello World its cyril here")
 })
 
 app.post("/add-exercise", async (req, res) => {
