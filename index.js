@@ -205,6 +205,7 @@ app.post("/add-exercise", async (req, res) => {
       const sanitizedExercises = workoutExercises.map(ex => ({
         name: ex.name,
         databaseId: ex.databaseId,
+        targetedMuscleGroups: ex.targetedMuscleGroups,
         sets: ex.sets.map(set => ({
           reps: Number(set.reps),
           weight: Number(set.weight),
