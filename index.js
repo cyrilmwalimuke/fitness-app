@@ -102,7 +102,7 @@ app.post("/add-exercise", async (req, res) => {
   app.post("/post-custom-workout", async (req, res) => {
     console.log("hello world")
     try {
-      const { duration, workoutExercises } = req.body;
+      const { duration, workoutExercises,name,imageUrl} = req.body;
   
       if (!duration || !workoutExercises) {
         return res.status(400).json({ success: false, message: "Missing required fields" });
@@ -122,7 +122,9 @@ app.post("/add-exercise", async (req, res) => {
   
       const workout = new CustomWorkout({
         duration,
-        workoutExercises: sanitizedExercises
+        workoutExercises: sanitizedExercises,
+        imageUrl,
+        name,
       });
   
       await workout.save();
