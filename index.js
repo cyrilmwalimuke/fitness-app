@@ -192,7 +192,7 @@ app.post("/add-exercise", async (req, res) => {
   });
 
 
-  app.post("/post-custom-workout-exercises", async (req, res) => {
+  app.post("/post-custom-workout", async (req, res) => {
     console.log("hello world")
     try {
       const { duration, workoutExercises } = req.body;
