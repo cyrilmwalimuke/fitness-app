@@ -59,7 +59,7 @@ app.post("/add-exercise", async (req, res) => {
   app.post("/post-workout-exercises", async (req, res) => {
     console.log("hello world")
     try {
-      const { duration, workoutExercises } = req.body;
+      const { duration, workoutExercises,userId } = req.body;
   
       if (!duration || !workoutExercises) {
         return res.status(400).json({ success: false, message: "Missing required fields" });
@@ -79,6 +79,7 @@ app.post("/add-exercise", async (req, res) => {
       }));
   
       const workout = new Workout({
+        userId,
         duration,
         workoutExercises: sanitizedExercises
       });
@@ -148,9 +149,18 @@ app.post("/add-exercise", async (req, res) => {
 
 
 
-  app.get("/workouts", async (req, res) => {
+  app.get("/workouts/:userId", async (req, res) => {
     try {
-      const workouts = await Workout.find();
+      const { userId } = req.params;
+
+      if (!userId) {
+      return res.status(400).json({
+        success: false,
+        message: "User ID is required",
+      });
+    }
+     
+    const workouts = await Workout.find({ userId }).sort({ createdAt: -1 });
       res.status(200).json(workouts);
     } catch (error) {
       console.error("Error fetching exercises:", error);

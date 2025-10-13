@@ -17,6 +17,7 @@ const ExerciseSchema = new mongoose.Schema({
 const WorkoutSchema = new mongoose.Schema({
   duration: { type: Number, required: true },
   workoutExercises: [ExerciseSchema],
+  userId: { type: String, required: true },
   createdAt: { type: Date, default: Date.now }
 });
 
